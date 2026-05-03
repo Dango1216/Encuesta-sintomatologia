@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta de Sintomatología Osteomuscular</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0F7B6C;
+    --teal-light: #13A192;
+    --teal-pale: #E6F4F2;
+    --teal-mid: #C2E8E3;
+    --navy: #0D2B3E;
+    --slate: #3D5A6C;
+    --warm: #F7F3EE;
+    --cream: #FDFBF8;
+    --accent: #E8622A;
+    --accent-light: #FFF0E9;
+    --text: #1A2E38;
+    --text-mid: #4A6070;
+    --text-light: #8099A8;
+    --border: #D8E6E3;
+    --white: #FFFFFF;
+    --shadow: 0 2px 20px rgba(15,123,108,0.10);
+    --shadow-lg: 0 8px 40px rgba(15,123,108,0.15);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    background: var(--navy);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .header-icon {
+    width: 44px; height: 44px;
+    background: var(--teal);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .header-text p {
+    font-size: 0.78rem;
+    color: var(--teal-light);
+    font-weight: 300;
+  }
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-download {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-download:hover { background: var(--teal-light); }
+  .responses-count {
+    background: rgba(255,255,255,0.1);
+    color: var(--teal-mid);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    height: 4px;
+    background: var(--border);
+    position: sticky;
+    top: 72px;
+    z-index: 99;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    transition: width 0.4s ease;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .app-body {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 76px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 76px;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
+  }
+  .sidebar-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0 20px 12px;
+  }
+  .sidebar-item {
+    padding: 11px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar-item:hover { background: var(--teal-pale); color: var(--teal); }
+  .sidebar-item.active {
+    background: var(--teal-pale);
+    color: var(--teal);
+    border-left-color: var(--teal);
+    font-weight: 600;
+  }
+  .sidebar-item.done { color: var(--teal-light); }
+  .sidebar-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .sidebar-item.active .sidebar-dot { background: var(--teal); }
+  .sidebar-item.done .sidebar-dot { background: var(--teal-light); }
+
+  /* ── CONTENT ── */
+  .main-content {
+    padding: 36px 40px;
+    max-width: 860px;
+  }
+
+  /* ── SECTION ── */
+  .section { display: none; animation: fadeIn 0.35s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: none; } }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--teal-pale);
+  }
+  .section-icon {
+    width: 52px; height: 52px;
+    background: var(--teal-pale);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .section-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 3px;
+  }
+
+  /* ── FORM GRID ── */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .form-grid.full { grid-template-columns: 1fr; }
+  .span-2 { grid-column: span 2; }
+
+  /* ── FIELD ── */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--slate);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .field label .req { color: var(--accent); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(15,123,108,0.12);
+  }
+  .field input.error, .field select.error { border-color: var(--accent); }
+  .field textarea { min-height: 80px; resize: vertical; }
+
+  /* ── RADIO GROUP ── */
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    font-weight: 500;
+    user-select: none;
+  }
+  .radio-option:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+  .radio-option.selected {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+  .radio-option input { display: none; }
+
+  /* ── CONDITIONAL ── */
+  .conditional {
+    background: var(--teal-pale);
+    border: 1px solid var(--teal-mid);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    display: none;
+    margin-top: 4px;
+  }
+  .conditional.visible { display: block; animation: fadeIn 0.25s ease; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── BODY TABLE ── */
+  .body-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+  .body-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+  .body-table thead tr {
+    background: var(--navy);
+    color: white;
+  }
+  .body-table thead th {
+    padding: 12px 10px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .body-table thead th:first-child { text-align: left; padding-left: 18px; width: 40px; }
+  .body-table thead th:nth-child(2) { text-align: left; min-width: 160px; }
+  .body-table .sub-header {
+    background: var(--slate);
+    color: var(--teal-mid);
+    font-size: 0.7rem;
+  }
+  .body-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .body-table tbody tr:hover { background: var(--teal-pale); }
+  .body-table tbody tr:last-child { border-bottom: none; }
+  .body-table tbody td { padding: 10px 8px; text-align: center; vertical-align: middle; }
+  .body-table tbody td:first-child {
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-align: left;
+    padding-left: 18px;
+  }
+  .body-table tbody td:nth-child(2) {
+    text-align: left;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .body-table .divider { background: var(--teal-pale); }
+  .body-table .divider td {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: left;
+  }
+
+  /* ── TABLE RADIO ── */
+  .table-radio { display: none; }
+  .table-radio-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+  .table-radio-label:hover { border-color: var(--teal); background: var(--teal-pale); }
+  .table-radio:checked + .table-radio-label {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: white;
+  }
+  .table-radio:checked + .table-radio-label::after {
+    content: '✓';
+    font-size: 14px;
+    color: white;
+    font-weight: 700;
+  }
+  .sev-radio:checked + .table-radio-label { background: var(--accent); border-color: var(--accent); }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--teal-pale);
+    border: 1px solid var(--teal-mid);
+    border-left: 4px solid var(--teal);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 0.84rem;
+    color: var(--slate);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .info-box strong { color: var(--teal); }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-mid);
+  }
+  .legend-dot {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .legend-dot.freq { background: var(--teal); color: white; }
+  .legend-dot.sev { background: var(--accent); color: white; }
+
+  /* ── NAV BUTTONS ── */
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .btn {
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary { background: var(--teal); color: white; }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+  .btn-secondary { background: var(--white); color: var(--text-mid); border: 1.5px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-accent { background: var(--accent); color: white; }
+  .btn-accent:hover { background: #d4551f; transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .success-screen.show { display: block; animation: fadeIn 0.5s ease; }
+  .success-icon {
+    width: 100px; height: 100px;
+    background: var(--teal-pale);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 50px;
+    margin: 0 auto 28px;
+    animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+  .success-screen h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .success-screen p { color: var(--text-mid); font-size: 1rem; margin-bottom: 32px; }
+
+  /* ── ADMIN PANEL ── */
+  .admin-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 52px; height: 52px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .admin-btn:hover { background: var(--teal); transform: scale(1.1); }
+
+  .admin-panel {
+    display: none;
+    position: fixed;
+    bottom: 88px; right: 24px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    width: 320px;
+    animation: fadeIn 0.2s ease;
+  }
+  .admin-panel.show { display: block; }
+  .admin-panel h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .admin-panel p { font-size: 0.8rem; color: var(--text-light); margin-bottom: 16px; }
+  .admin-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .admin-stat:last-of-type { border-bottom: none; margin-bottom: 14px; }
+  .admin-stat span:last-child { font-weight: 700; color: var(--teal); }
+
+  /* ── FIRMA ── */
+  .firma-box {
+    background: var(--white);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-sm);
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .firma-box:hover { border-color: var(--teal); color: var(--teal); }
+
+  .declaration-text {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    top: 90px; right: 24px;
+    background: var(--navy);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    z-index: 300;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show { transform: none; }
+
+  /* ── MODAL PRIVACIDAD ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,43,62,0.82);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 620px; width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+    animation: modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes modalIn { from { transform: scale(0.85); opacity:0; } to { transform: scale(1); opacity:1; } }
+  .modal-header {
+    background: var(--navy);
+    padding: 28px 32px 20px;
+    text-align: center;
+  }
+  .modal-header .modal-icon { font-size: 44px; margin-bottom: 10px; }
+  .modal-header h2 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--white);
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+  .modal-header p { color: var(--teal-mid); font-size: 0.82rem; }
+  .modal-body { padding: 24px 32px; max-height: 55vh; overflow-y: auto; }
+  .modal-law-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal-pale); color: var(--teal);
+    border: 1px solid var(--teal-mid);
+    border-radius: 8px; padding: 6px 14px;
+    font-size: 0.78rem; font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .modal-body p { font-size: 0.86rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 14px; }
+  .modal-body strong { color: var(--navy); }
+  .modal-rights {
+    background: var(--warm);
+    border-radius: 10px; padding: 14px 18px;
+    margin-top: 8px; margin-bottom: 4px;
+  }
+  .modal-rights p { margin-bottom: 6px; font-size: 0.82rem; }
+  .modal-rights p:last-child { margin-bottom: 0; }
+  .modal-footer {
+    padding: 20px 32px 28px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .modal-check {
+    display: flex; align-items: flex-start; gap: 12px;
+    cursor: pointer; user-select: none;
+  }
+  .modal-check input[type="checkbox"] {
+    width: 20px; height: 20px; flex-shrink: 0;
+    accent-color: var(--teal); cursor: pointer; margin-top: 2px;
+  }
+  .modal-check span { font-size: 0.85rem; color: var(--text-mid); line-height: 1.5; }
+  .modal-check span strong { color: var(--text); }
+  .btn-modal-accept {
+    background: var(--teal); color: white;
+    border: none; border-radius: 12px;
+    padding: 14px; font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s; opacity: 0.4; pointer-events: none;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-modal-accept.enabled { opacity: 1; pointer-events: auto; }
+  .btn-modal-accept.enabled:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* ── EMAIL CONFIG ── */
+  .email-config-card {
+    background: var(--accent-light);
+    border: 1.5px solid #f0c4b0;
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .email-config-icon { font-size: 28px; flex-shrink: 0; }
+  .email-config-text { flex: 1; }
+  .email-config-text p { font-size: 0.82rem; color: var(--text-mid); margin-top: 3px; }
+  .email-config-text strong { font-size: 0.88rem; color: var(--navy); }
+
+  /* ── SEVERIDAD DISABLED ── */
+  .sev-disabled .table-radio-label {
+    background: var(--border) !important;
+    border-color: var(--border) !important;
+    cursor: not-allowed !important;
+    opacity: 0.45;
+  }
+  .sev-na-label {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    font-style: italic;
+    display: inline-block;
+    padding: 4px 8px;
+    background: var(--border);
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  /* ── MODAL DECLARATORIA ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,43,62,0.82);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+  }
+  .modal-box {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 620px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    overflow: hidden;
+    animation: slideUp 0.4s cubic-bezier(0.34,1.2,0.64,1);
+  }
+  @keyframes slideUp { from { transform: translateY(40px); opacity:0; } to { transform: none; opacity:1; } }
+  .modal-header {
+    background: var(--navy);
+    padding: 28px 32px 20px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .modal-header-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--teal); display: flex; align-items: center;
+    justify-content: center; font-size: 24px; flex-shrink: 0;
+  }
+  .modal-header h2 {
+    font-family: 'DM Serif Display', serif;
+    color: white; font-size: 1.25rem; line-height: 1.3;
+  }
+  .modal-header p { color: var(--teal-mid); font-size: 0.8rem; margin-top: 4px; }
+  .modal-body {
+    padding: 28px 32px;
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+  .modal-body::-webkit-scrollbar { width: 4px; }
+  .modal-body::-webkit-scrollbar-thumb { background: var(--teal-mid); border-radius: 4px; }
+  .modal-law-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .modal-law-title::after { content:''; flex:1; height:1px; background: var(--border); }
+  .modal-text {
+    font-size: 0.84rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .modal-highlight {
+    background: var(--teal-pale);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: var(--slate);
+    margin: 16px 0;
+    line-height: 1.7;
+  }
+  .modal-checkbox-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--warm); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; margin-top: 20px;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .modal-checkbox-row:hover { border-color: var(--teal); }
+  .modal-checkbox-row input[type="checkbox"] {
+    width: 18px; height: 18px; accent-color: var(--teal);
+    margin-top: 2px; flex-shrink: 0; cursor: pointer;
+  }
+  .modal-checkbox-row label {
+    font-size: 0.84rem; color: var(--text); line-height: 1.6; cursor: pointer;
+  }
+  .modal-footer {
+    padding: 20px 32px 28px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end;
+  }
+  .btn-modal-accept {
+    background: var(--teal); color: white; border: none;
+    padding: 13px 32px; border-radius: 10px; font-size: 0.9rem;
+    font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s; opacity: 0.4; pointer-events: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-modal-accept.enabled { opacity: 1; pointer-events: all; }
+  .btn-modal-accept.enabled:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* ── EMAIL CONFIG MODAL ── */
+  .email-config-modal {
+    position: fixed; inset: 0;
+    background: rgba(13,43,62,0.7);
+    z-index: 500;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .email-config-modal.show { display: flex; }
+  .email-config-box {
+    background: var(--white); border-radius: 16px;
+    max-width: 480px; width: 100%; padding: 28px;
+    box-shadow: var(--shadow-lg);
+  }
+  .email-config-box h3 { font-family: 'DM Serif Display', serif; color: var(--navy); margin-bottom: 6px; font-size: 1.2rem; }
+  .email-config-box p { font-size: 0.82rem; color: var(--text-light); margin-bottom: 18px; }
+  .config-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .config-field label { font-size: 0.75rem; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em; }
+  .config-field input {
+    border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-size: 0.88rem; font-family: 'DM Sans', sans-serif;
+    outline: none; color: var(--text); transition: border-color 0.2s;
+  }
+  .config-field input:focus { border-color: var(--teal); }
+  .config-note { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
+  .config-note a { color: var(--teal); }
+
+  /* ── NO-APLICA en tabla ── */
+  .na-label {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--border); color: var(--text-light);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .sev-cell { transition: opacity 0.2s; }
+  .sev-cell.disabled { opacity: 0.35; pointer-events: none; }
+
+  @media (max-width: 768px) {
+    .app-body { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main-content { padding: 20px 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid.three { grid-template-columns: 1fr; }
+    .span-2 { grid-column: span 1; }
+    .header-text h1 { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="header-icon">🦴</div>
+  <div class="header-text">
+    <h1>Encuesta de Sintomatología Osteomuscular</h1>
+    <p>CGS SAS — Sistema de Gestión SST</p>
+  </div>
+  <div class="header-right">
+    <div class="responses-count" id="responsesCount">0 respuestas</div>
+    <button class="btn-download" onclick="downloadCSV()">⬇ Descargar resultados</button>
+  </div>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="progressBar" style="width:20%"></div>
+</div>
+
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-title">Secciones</div>
+    <div class="sidebar-item active" onclick="goTo(1)" id="nav1">
+      <div class="sidebar-dot"></div> Datos Generales
+    </div>
+    <div class="sidebar-item" onclick="goTo(2)" id="nav2">
+      <div class="sidebar-dot"></div> Información Personal
+    </div>
+    <div class="sidebar-item" onclick="goTo(3)" id="nav3">
+      <div class="sidebar-dot"></div> Hábitos de Salud
+    </div>
+    <div class="sidebar-item" onclick="goTo(4)" id="nav4">
+      <div class="sidebar-dot"></div> Estado Osteomuscular
+    </div>
+    <div class="sidebar-item" onclick="goTo(5)" id="nav5">
+      <div class="sidebar-dot"></div> Mapa Corporal
+    </div>
+    <div class="sidebar-item" onclick="goTo(6)" id="nav6">
+      <div class="sidebar-dot"></div> Declaración y Firma
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- ══ SECCIÓN 1: DATOS GENERALES ══ -->
+    <div class="section active" id="section1">
+      <div class="section-header">
+        <div class="section-icon">🏢</div>
+        <div>
+          <div class="section-title">Datos Generales</div>
+          <div class="section-subtitle">Información de la empresa y contexto de la encuesta</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Empresa</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Ciudad <span class="req">*</span></label>
+            <input type="text" id="ciudad" placeholder="Ej: Bogotá">
+          </div>
+          <div class="field">
+            <label>Fecha de realización <span class="req">*</span></label>
+            <input type="date" id="fecha">
+          </div>
+          <div class="field span-2">
+            <label>Nombre de la Empresa <span class="req">*</span></label>
+            <input type="text" id="empresa" placeholder="Razón social">
+          </div>
+          <div class="field">
+            <label>NIT</label>
+            <input type="text" id="nit" placeholder="Ej: 901483038-1">
+          </div>
+          <div class="field">
+            <label>Área <span class="req">*</span></label>
+            <input type="text" id="area" placeholder="Ej: Operaciones">
+          </div>
+          <div class="field span-2">
+            <label>Cargo o Puesto de Trabajo <span class="req">*</span></label>
+            <input type="text" id="cargo" placeholder="Cargo actual">
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-primary" onclick="nextSection(1)">Siguiente ›</button>
+      </div>
+    </div>
+
+    <!-- ══ SECCIÓN 2: INFORMACIÓN PERSONAL ══ -->
+    <div class="section" id="section2">
+      <div class="section-header">
+        <div class="section-icon">👤</div>
+        <div>
+          <div class="section-title">Información Personal</div>
+          <div class="section-subtitle">Datos del trabajador</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Identificación</div>
+        <div class="form-grid">
+          <div class="field span-2">
+            <label>Nombre Completo <span class="req">*</span></label>
+            <input type="text" id="nombre" placeholder="Apellidos y nombres">
+          </div>
+          <div class="field">
+            <label>Cédula / Identificación <span class="req">*</span></label>
+            <input type="text" id="cedula" placeholder="Número de identificación">
+          </div>
+          <div class="field">
+            <label>Turno</label>
+            <select id="turno">
+              <option value="">Seleccionar...</option>
+              <option>Mañana</option>
+              <option>Tarde</option>
+              <option>Noche</option>
+              <option>Rotativo</option>
+              <option>Jornada completa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Datos Demográficos</div>
+        <div class="form-grid three">
+          <div class="field">
+            <label>Edad (años) <span class="req">*</span></label>
+            <input type="number" id="edad" placeholder="Ej: 32" min="14" max="80">
+          </div>
+          <div class="field">
+            <label>Estatura (cm)</label>
+            <input type="number" id="talla" placeholder="Ej: 170" min="100" max="220">
+          </div>
+          <div class="field">
+            <label>Peso (kg)</label>
+            <input type="number" id="peso" placeholder="Ej: 70" min="30" max="200">
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="field">
+            <label>Sexo <span class="req">*</span></label>
+            <div class="radio-group" id="sexo">
+              <label class="radio-option"><input type="radio" name="sexo" value="M"> Masculino</label>
+              <label class="radio-option"><input type="radio" name="sexo" value="F"> Femenino</label>
+              <label class="radio-option"><input type="radio" name="sexo" value="Otro"> Otro</label>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="field">
+            <label>Predominancia</label>
+            <div class="radio-group" id="predominancia">
+              <label class="radio-option"><input type="radio" name="pred" value="Derecho(a)"> 🖐 Derecho(a)</label>
+              <label class="radio-option"><input type="radio" name="pred" value="Zurdo(a)"> 🤚 Zurdo(a)</label>
+              <label class="radio-option"><input type="radio" name="pred" value="Ambidiestro"> ✌ Ambidiestro</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Antigüedad</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Antigüedad en la Empresa</label>
+            <select id="antigEmpresa">
+              <option value="">Seleccionar...</option>
+              <option>Menos de 1 año</option>
+              <option>1 - 2 años</option>
+              <option>3 - 5 años</option>
+              <option>6 - 10 años</option>
+              <option>Más de 10 años</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Antigüedad en el Cargo</label>
+            <select id="antigCargo">
+              <option value="">Seleccionar...</option>
+              <option>Menos de 1 año</option>
+              <option>1 - 2 años</option>
+              <option>3 - 5 años</option>
+              <option>6 - 10 años</option>
+              <option>Más de 10 años</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(1)">‹ Anterior</button>
+        <button class="btn btn-primary" onclick="nextSection(2)">Siguiente ›</button>
+      </div>
+    </div>
+
+    <!-- ══ SECCIÓN 3: HÁBITOS ══ -->
+    <div class="section" id="section3">
+      <div class="section-header">
+        <div class="section-icon">🏃</div>
+        <div>
+          <div class="section-title">Hábitos de Salud</div>
+          <div class="section-subtitle">Hábitos que pueden influir en la salud osteomuscular</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Tabaquismo</div>
+        <div class="field">
+          <label>¿Fuma actualmente?</label>
+          <div class="radio-group" id="fuma">
+            <label class="radio-option"><input type="radio" name="fuma" value="Si" onchange="toggleConditional('fumaDetalle', true)"> 🚬 Sí</label>
+            <label class="radio-option"><input type="radio" name="fuma" value="No" onchange="toggleConditional('fumaDetalle', false)"> No</label>
+          </div>
+        </div>
+        <div class="conditional" id="fumaDetalle">
+          <div class="form-grid">
+            <div class="field">
+              <label>¿Cuántos cigarrillos al día?</label>
+              <input type="number" id="numCigarrillos" placeholder="Número" min="0">
+            </div>
+            <div class="field">
+              <label>¿Hace cuánto fuma?</label>
+              <select id="haceCuantoFuma">
+                <option value="">Seleccionar...</option>
+                <option>Menos de 1 año</option>
+                <option>1 - 5 años</option>
+                <option>5 - 10 años</option>
+                <option>Más de 10 años</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Actividad Física</div>
+        <div class="field">
+          <label>¿Realiza algún tipo de actividad física?</label>
+          <div class="radio-group" id="actFisica">
+            <label class="radio-option"><input type="radio" name="actFisica" value="Si" onchange="toggleConditional('actFisicaDetalle', true)"> 💪 Sí</label>
+            <label class="radio-option"><input type="radio" name="actFisica" value="No" onchange="toggleConditional('actFisicaDetalle', false)"> No</label>
+          </div>
+        </div>
+        <div class="conditional" id="actFisicaDetalle">
+          <div class="form-grid">
+            <div class="field span-2">
+              <label>¿Cuál actividad?</label>
+              <input type="text" id="cualActividad" placeholder="Ej: Natación, ciclismo, caminar...">
+            </div>
+            <div class="field">
+              <label>Frecuencia</label>
+              <div class="radio-group" id="frecActFisica" style="flex-direction:column; gap:8px; margin-top:4px;">
+                <label class="radio-option"><input type="radio" name="frecAct" value="Diario"> Diario</label>
+                <label class="radio-option"><input type="radio" name="frecAct" value="Dos veces semana"> Dos veces por semana</label>
+                <label class="radio-option"><input type="radio" name="frecAct" value="Fines de semana"> Fines de semana</label>
+              </div>
+            </div>
+            <div class="field">
+              <label>Duración por sesión</label>
+              <div class="radio-group" id="tiempoAct" style="flex-direction:column; gap:8px; margin-top:4px;">
+                <label class="radio-option"><input type="radio" name="tiempoAct" value="15 min"> 15 minutos</label>
+                <label class="radio-option"><input type="radio" name="tiempoAct" value="30 min"> 30 minutos</label>
+                <label class="radio-option"><input type="radio" name="tiempoAct" value="1 hora"> 1 hora</label>
+                <label class="radio-option"><input type="radio" name="tiempoAct" value="Más de 1 hora"> Más de 1 hora</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(2)">‹ Anterior</button>
+        <button class="btn btn-primary" onclick="nextSection(3)">Siguiente ›</button>
+      </div>
+    </div>
+
+    <!-- ══ SECCIÓN 4: ESTADO OSTEOMUSCULAR ══ -->
+    <div class="section" id="section4">
+      <div class="section-header">
+        <div class="section-icon">🩺</div>
+        <div>
+          <div class="section-title">Estado Actual de Salud</div>
+          <div class="section-subtitle">Información sobre condición osteomuscular actual</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="field" style="margin-bottom:16px">
+          <label>¿Presenta dolor, molestias o disconfort a nivel osteomuscular en alguna parte del cuerpo?</label>
+          <div class="radio-group" id="presentaDolor" style="margin-top:10px">
+            <label class="radio-option"><input type="radio" name="dolor" value="Si"> 🔴 Sí</label>
+            <label class="radio-option"><input type="radio" name="dolor" value="No"> ✅ No</label>
+          </div>
+        </div>
+
+        <div class="field" style="margin-bottom:16px">
+          <label>¿Presenta alguna enfermedad osteomuscular actualmente?</label>
+          <div class="radio-group" id="enfermedadOsteo" style="margin-top:10px">
+            <label class="radio-option"><input type="radio" name="enfOsteo" value="Si" onchange="toggleConditional('enfOsteoDetalle', true)"> 🏥 Sí</label>
+            <label class="radio-option"><input type="radio" name="enfOsteo" value="No" onchange="toggleConditional('enfOsteoDetalle', false)"> ✅ No</label>
+          </div>
+        </div>
+
+        <div class="conditional" id="enfOsteoDetalle">
+          <div class="form-grid three">
+            <div class="field">
+              <label>¿Cuál enfermedad?</label>
+              <input type="text" id="cualEnf" placeholder="Nombre de la enfermedad">
+            </div>
+            <div class="field">
+              <label>Código CIE-10</label>
+              <input type="text" id="cie10" placeholder="Ej: M54.5">
+            </div>
+            <div class="field">
+              <label>Descripción</label>
+              <input type="text" id="descCie10" placeholder="Descripción del diagnóstico">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(3)">‹ Anterior</button>
+        <button class="btn btn-primary" onclick="nextSection(4)">Siguiente ›</button>
+      </div>
+    </div>
+
+    <!-- ══ SECCIÓN 5: MAPA CORPORAL ══ -->
+    <div class="section" id="section5">
+      <div class="section-header">
+        <div class="section-icon">🗺️</div>
+        <div>
+          <div class="section-title">Mapa de Sintomatología Corporal</div>
+          <div class="section-subtitle">Marque la frecuencia y severidad de molestias en cada zona</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        Marque con ✓ en la casilla correspondiente para cada segmento corporal.<br>
+        <strong>Frecuencia:</strong> Nunca / Rara vez (1 vez al mes) / Frecuente (c/2 semanas) / Continuo (≥3 veces/semana)<br>
+        <strong>Severidad</strong> (solo si marcó Rara vez, Frecuente o Continuo): Leve / Moderado / Severo
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot freq">✓</div> Frecuencia</div>
+        <div class="legend-item"><div class="legend-dot sev">✓</div> Severidad</div>
+      </div>
+
+      <div class="body-table-wrap">
+        <table class="body-table" id="bodyTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Segmento Corporal</th>
+              <th colspan="4">FRECUENCIA</th>
+              <th colspan="3">SEVERIDAD</th>
+            </tr>
+            <tr class="sub-header">
+              <th></th>
+              <th></th>
+              <th>Nunca</th>
+              <th>Rara vez</th>
+              <th>Frecuente</th>
+              <th>Continuo</th>
+              <th>Leve</th>
+              <th>Moderado</th>
+              <th>Severo</th>
+            </tr>
+          </thead>
+          <tbody id="bodyTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(4)">‹ Anterior</button>
+        <button class="btn btn-primary" onclick="nextSection(5)">Siguiente ›</button>
+      </div>
+    </div>
+
+    <!-- ══ SECCIÓN 6: DECLARACIÓN Y FIRMA ══ -->
+    <div class="section" id="section6">
+      <div class="section-header">
+        <div class="section-icon">✍️</div>
+        <div>
+          <div class="section-title">Declaración y Firma</div>
+          <div class="section-subtitle">Confirmación de la información suministrada</div>
+        </div>
+      </div>
+
+      <div class="declaration-text">
+        Declaro que he sido informado y he comprendido satisfactoriamente la naturaleza y propósito de esta encuesta, que me han explicado claramente que la información es de carácter confidencial y será utilizada exclusivamente para fines de vigilancia epidemiológica en el marco del Sistema de Gestión de Seguridad y Salud en el Trabajo (SG-SST).
+      </div>
+
+      <div class="card">
+        <div class="card-title">Firma del Trabajador</div>
+        <div class="field">
+          <label>Nombre completo</label>
+          <input type="text" id="nombreFirma" placeholder="Confirme su nombre completo">
+        </div>
+        <div class="field" style="margin-top:14px">
+          <label>Firma (haga clic para marcar su aceptación)</label>
+          <div class="firma-box" id="firmaBox" onclick="toggleFirma()">
+            <span id="firmaText">Haga clic aquí para aceptar y firmar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goTo(5)">‹ Anterior</button>
+        <button class="btn btn-accent" onclick="submitForm()">✅ Enviar Encuesta</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">✅</div>
+      <h2>¡Encuesta enviada con éxito!</h2>
+      <p>Gracias por completar la encuesta de sintomatología osteomuscular.<br>Su información ha sido registrada correctamente.</p>
+      <button class="btn btn-primary" onclick="newResponse()" style="margin:0 auto">+ Nueva respuesta</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL DECLARATORIA LEY 1581 -->
+<div class="modal-overlay" id="modalDeclaratoria">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-icon">🔐</div>
+      <div>
+        <h2>Autorización de Tratamiento de Datos Personales</h2>
+        <p>Ley 1581 de 2012 — Protección de Datos Personales en Colombia</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-law-title">Declaración de Confidencialidad</div>
+      <p class="modal-text">
+        En cumplimiento de la <strong>Ley Estatutaria 1581 de 2012</strong> y el <strong>Decreto Reglamentario 1377 de 2013</strong>, 
+        <strong>Centro Gestión Sostenible SAS ESP</strong> le informa que los datos personales que usted suministre 
+        a través de esta encuesta serán tratados de manera confidencial y segura.
+      </p>
+      <div class="modal-highlight">
+        📋 <strong>Finalidad del tratamiento:</strong> La información recopilada tiene como único propósito la 
+        <strong>Vigilancia Epidemiológica Osteomuscular</strong> en el marco del Sistema de Gestión de Seguridad 
+        y Salud en el Trabajo (SG-SST), para identificar factores de riesgo y diseñar programas de prevención.
+      </div>
+      <div class="modal-law-title">Sus Derechos como Titular</div>
+      <p class="modal-text">
+        De conformidad con el artículo 8 de la Ley 1581 de 2012, usted tiene derecho a:
+      </p>
+      <p class="modal-text" style="padding-left:12px">
+        <strong>• Conocer</strong> los datos personales que reposan en nuestras bases de datos.<br>
+        <strong>• Actualizar</strong> su información cuando sea inexacta o incompleta.<br>
+        <strong>• Rectificar</strong> datos que resulten inexactos o incompletos.<br>
+        <strong>• Suprimir</strong> sus datos cuando considere que no están siendo tratados conforme a la ley.<br>
+        <strong>• Revocar</strong> la autorización otorgada en cualquier momento.<br>
+        <strong>• Acceder</strong> gratuitamente a sus datos personales que hayan sido objeto de tratamiento.
+      </p>
+      <div class="modal-highlight">
+        🔒 <strong>Confidencialidad:</strong> Su información <u>no será compartida con terceros</u> sin su 
+        consentimiento previo y expreso, ni utilizada con fines distintos a los aquí declarados. 
+        Los datos serán conservados únicamente durante el tiempo necesario para cumplir la finalidad descrita.
+      </div>
+      <p class="modal-text">
+        Para ejercer sus derechos o realizar consultas sobre el tratamiento de sus datos, puede comunicarse 
+        con el Responsable del SG-SST de <strong>Centro Gestión Sostenible SAS ESP</strong>.
+      </p>
+      <label class="modal-checkbox-row" for="checkAcepto">
+        <input type="checkbox" id="checkAcepto" onchange="toggleModalBtn()">
+        <label for="checkAcepto">
+          He leído, entendido y acepto voluntariamente el tratamiento de mis datos personales 
+          conforme a la Ley 1581 de 2012 y a la política de privacidad de Centro Gestión Sostenible SAS ESP, 
+          para los fines exclusivos de vigilancia epidemiológica descritos anteriormente.
+        </label>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-accept" id="btnAceptarModal" onclick="aceptarDeclaratoria()">
+        ✅ Acepto y deseo continuar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL CONFIG MODAL -->
+<div class="email-config-modal" id="emailConfigModal">
+  <div class="email-config-box">
+    <h3>⚙ Configurar notificaciones por correo</h3>
+    <p>Ingresa los datos de EmailJS para recibir un correo cada vez que alguien complete la encuesta. Regístrate gratis en <a href="https://emailjs.com" target="_blank">emailjs.com</a>.</p>
+    <div class="config-field">
+      <label>Service ID de EmailJS</label>
+      <input type="text" id="cfgServiceId" placeholder="Ej: service_abc123">
+      <span class="config-note">Lo encuentras en EmailJS → Email Services</span>
+    </div>
+    <div class="config-field">
+      <label>Template ID de EmailJS</label>
+      <input type="text" id="cfgTemplateId" placeholder="Ej: template_xyz789">
+      <span class="config-note">Lo encuentras en EmailJS → Email Templates</span>
+    </div>
+    <div class="config-field">
+      <label>Public Key de EmailJS</label>
+      <input type="text" id="cfgPublicKey" placeholder="Ej: user_aBcDeFgHiJk">
+      <span class="config-note">Lo encuentras en EmailJS → Account → Public Key</span>
+    </div>
+    <div class="config-field">
+      <label>Tu correo (destinatario de alertas)</label>
+      <input type="email" id="cfgEmail" placeholder="tu@correo.com">
+    </div>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button class="btn btn-primary" onclick="saveEmailConfig()" style="flex:1; justify-content:center">💾 Guardar</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('emailConfigModal').classList.remove('show')" style="flex:1; justify-content:center">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN BTN -->
+<button class="admin-btn" onclick="toggleAdmin()" title="Panel de administrador">⚙</button>
+<div class="admin-panel" id="adminPanel">
+  <h3>Panel de Resultados</h3>
+  <p>Gestión de respuestas almacenadas localmente</p>
+  <div class="admin-stat">
+    <span>Total de respuestas</span>
+    <span id="adminTotal">0</span>
+  </div>
+  <div class="admin-stat">
+    <span>Última respuesta</span>
+    <span id="adminLast">—</span>
+  </div>
+  <div class="admin-stat">
+    <span>Notif. correo</span>
+    <span id="adminEmailStatus">—</span>
+  </div>
+  <button class="btn btn-primary" onclick="downloadCSV()" style="width:100%; justify-content:center; margin-bottom:8px">⬇ Descargar Excel (CSV)</button>
+  <button class="btn btn-secondary" onclick="showEmailConfig()" style="width:100%; justify-content:center; margin-bottom:8px; font-size:0.82rem">📧 Configurar correo de notificación</button>
+  <button class="btn btn-secondary" onclick="clearData()" style="width:100%; justify-content:center; font-size:0.8rem">🗑 Borrar todos los datos</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+// ── SEGMENTOS CORPORALES ──
+const segments = [
+  {group:'Miembro Superior', items:[
+    'Ojos','Cuello',
+    'Hombro Izquierdo','Hombro Derecho',
+    'Brazo Izquierdo','Brazo Derecho',
+    'Codo Izquierdo','Codo Derecho',
+    'Antebrazo Izquierdo','Antebrazo Derecho',
+    'Muñeca Izquierda','Muñeca Derecha',
+    'Mano Izquierda','Mano Derecha',
+  ]},
+  {group:'Tronco', items:[
+    'Zona Dorsal','Zona Lumbar','Nalgas y/o Caderas',
+  ]},
+  {group:'Miembro Inferior', items:[
+    'Muslo Derecho','Muslo Izquierdo',
+    'Rodilla Izquierda','Rodilla Derecha',
+    'Pierna Izquierda','Pierna Derecha',
+    'Pie y/o Tobillo Izquierdo','Pie y/o Tobillo Derecho',
+  ]}
+];
+
+let allSegments = [];
+let firmaSigned = false;
+let currentSection = 1;
+let responses = JSON.parse(localStorage.getItem('encuesta_responses') || '[]');
+let emailConfig = JSON.parse(localStorage.getItem('encuesta_email_config') || 'null');
+
+// ── MODAL DECLARATORIA ──
+function toggleModalBtn() {
+  const checked = document.getElementById('checkAcepto').checked;
+  const btn = document.getElementById('btnAceptarModal');
+  btn.classList.toggle('enabled', checked);
+}
+
+function aceptarDeclaratoria() {
+  if (!document.getElementById('checkAcepto').checked) return;
+  document.getElementById('modalDeclaratoria').style.display = 'none';
+}
+
+// ── BUILD TABLE ──
+function buildTable() {
+  const tbody = document.getElementById('bodyTableBody');
+  let num = 0;
+  segments.forEach(group => {
+    const divRow = document.createElement('tr');
+    divRow.className = 'divider';
+    divRow.innerHTML = `<td colspan="9">${group.group}</td>`;
+    tbody.appendChild(divRow);
+
+    group.items.forEach(seg => {
+      allSegments.push(seg);
+      const tr = document.createElement('tr');
+      tr.dataset.idx = num;
+      tr.innerHTML = `
+        <td>${num}</td>
+        <td>${seg}</td>
+        ${['nunca','rara','frecuente','continuo'].map(f => `
+          <td>
+            <input type="radio" class="table-radio" name="freq_${num}" value="${f}" id="f_${num}_${f}" onchange="onFreqChange(${num}, '${f}')">
+            <label class="table-radio-label" for="f_${num}_${f}"></label>
+          </td>`).join('')}
+        <td colspan="3" class="sev-cell" id="sevcell_${num}">
+          ${['leve','moderado','severo'].map(s => `
+            <input type="radio" class="table-radio sev-radio" name="sev_${num}" value="${s}" id="s_${num}_${s}">
+            <label class="table-radio-label" for="s_${num}_${s}" style="border-color:#f0d0c0"></label>
+          `).join('')}
+        </td>
+      `;
+      tbody.appendChild(tr);
+      num++;
+    });
+  });
+}
+
+// ── FRECUENCIA → SEVERIDAD automático ──
+function onFreqChange(idx, val) {
+  const sevCell = document.getElementById(`sevcell_${idx}`);
+  if (val === 'nunca') {
+    // Desmarcar severidad y deshabilitar
+    document.querySelectorAll(`input[name="sev_${idx}"]`).forEach(r => r.checked = false);
+    sevCell.innerHTML = `<span class="na-label">No aplica</span>`;
+    sevCell.classList.add('disabled');
+  } else {
+    // Rehabilitar severidad si estaba como no aplica
+    if (sevCell.classList.contains('disabled') || sevCell.querySelector('.na-label')) {
+      sevCell.classList.remove('disabled');
+      sevCell.innerHTML = ['leve','moderado','severo'].map(s => `
+        <input type="radio" class="table-radio sev-radio" name="sev_${idx}" value="${s}" id="s_${idx}_${s}">
+        <label class="table-radio-label" for="s_${idx}_${s}" style="border-color:#f0d0c0"></label>
+      `).join('');
+    }
+  }
+}
+
+// ── NAVIGATION ──
+function goTo(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('section' + n).classList.add('active');
+  document.getElementById('nav' + n).classList.add('active');
+  currentSection = n;
+  document.getElementById('progressBar').style.width = (n / 6 * 100) + '%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function nextSection(current) {
+  if (current === 1 && !validate(['ciudad','fecha','empresa','area','cargo'])) return;
+  if (current === 2 && !validate(['nombre','cedula','edad'])) return;
+  for (let i = 1; i <= current; i++) {
+    document.getElementById('nav' + i).classList.add('done');
+  }
+  goTo(current + 1);
+}
+
+function validate(fields) {
+  let ok = true;
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (!el.value.trim()) {
+      el.classList.add('error');
+      el.addEventListener('input', () => el.classList.remove('error'), {once:true});
+      ok = false;
+    }
+  });
+  if (!ok) showToast('⚠️ Por favor completa los campos requeridos');
+  return ok;
+}
+
+// ── CONDITIONALS ──
+function toggleConditional(id, show) {
+  document.getElementById(id).classList.toggle('visible', show);
+}
+
+// ── RADIO OPTIONS ──
+document.addEventListener('click', e => {
+  const opt = e.target.closest('.radio-option');
+  if (!opt) return;
+  const group = opt.closest('.radio-group');
+  if (!group) return;
+  group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+  opt.classList.add('selected');
+});
+
+// ── FIRMA ──
+function toggleFirma() {
+  firmaSigned = !firmaSigned;
+  const box = document.getElementById('firmaBox');
+  const txt = document.getElementById('firmaText');
+  if (firmaSigned) {
+    box.style.background = 'var(--teal-pale)';
+    box.style.borderColor = 'var(--teal)';
+    box.style.borderStyle = 'solid';
+    txt.textContent = '✅ Firmado y aceptado';
+    txt.style.color = 'var(--teal)';
+    txt.style.fontWeight = '600';
+  } else {
+    box.style.cssText = '';
+    txt.textContent = 'Haga clic aquí para aceptar y firmar';
+    txt.style.cssText = '';
+  }
+}
+
+// ── COLLECT DATA ──
+function collectData() {
+  const getRadio = (name) => {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  };
+  const getVal = (id) => {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  };
+
+  const talla = parseFloat(getVal('talla'));
+  const peso = parseFloat(getVal('peso'));
+
+  const data = {
+    timestamp: new Date().toLocaleString('es-CO'),
+    ciudad: getVal('ciudad'),
+    fecha: getVal('fecha'),
+    empresa: getVal('empresa'),
+    nit: getVal('nit'),
+    area: getVal('area'),
+    cargo: getVal('cargo'),
+    nombre: getVal('nombre'),
+    cedula: getVal('cedula'),
+    edad: getVal('edad'),
+    sexo: getRadio('sexo'),
+    turno: getVal('turno'),
+    talla: getVal('talla'),
+    peso: getVal('peso'),
+    imc: talla && peso ? (peso / Math.pow(talla/100, 2)).toFixed(1) : '',
+    predominancia: getRadio('pred'),
+    antigEmpresa: getVal('antigEmpresa'),
+    antigCargo: getVal('antigCargo'),
+    fuma: getRadio('fuma'),
+    numCigarrillos: getVal('numCigarrillos'),
+    haceCuantoFuma: getVal('haceCuantoFuma'),
+    actFisica: getRadio('actFisica'),
+    cualActividad: getVal('cualActividad'),
+    frecActFisica: getRadio('frecAct'),
+    tiempoActFisica: getRadio('tiempoAct'),
+    presentaDolor: getRadio('dolor'),
+    enfermedadOsteo: getRadio('enfOsteo'),
+    cualEnf: getVal('cualEnf'),
+    cie10: getVal('cie10'),
+    descCie10: getVal('descCie10'),
+  };
+
+  // Body segments — severidad "No aplica" si frecuencia fue Nunca
+  allSegments.forEach((seg, i) => {
+    const freq = getRadio(`freq_${i}`);
+    const sevCell = document.getElementById(`sevcell_${i}`);
+    const isNunca = freq === 'nunca' || (sevCell && sevCell.querySelector('.na-label'));
+    data[`freq_${seg}`] = freq || '';
+    data[`sev_${seg}`] = isNunca ? 'No aplica' : (getRadio(`sev_${i}`) || '');
+  });
+
+  data.firmado = firmaSigned ? 'Sí' : 'No';
+  data.nombreFirma = getVal('nombreFirma');
+  return data;
+}
+
+// ── SUBMIT ──
+async function submitForm() {
+  if (!firmaSigned) {
+    showToast('⚠️ Por favor firma la declaración para continuar');
+    return;
+  }
+  const data = collectData();
+  responses.push(data);
+  localStorage.setItem('encuesta_responses', JSON.stringify(responses));
+  updateCount();
+
+  // Send email notification
+  await sendEmailNotification(data);
+
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('successScreen').classList.add('show');
+  showToast('✅ Encuesta registrada exitosamente');
+}
+
+// ── EMAIL NOTIFICATION ──
+async function sendEmailNotification(data) {
+  if (!emailConfig) return;
+  const { serviceId, templateId, publicKey, email } = emailConfig;
+  if (!serviceId || !templateId || !publicKey || !email) return;
+
+  try {
+    emailjs.init(publicKey);
+
+    // Build body map summary
+    const bodyMap = allSegments.map((seg, i) => {
+      const freq = data[`freq_${seg}`] || '—';
+      const sev = data[`sev_${seg}`] || '—';
+      return `${seg}: Frecuencia=${freq} | Severidad=${sev}`;
+    }).join('\n');
+
+    await emailjs.send(serviceId, templateId, {
+      to_email: email,
+      nombre_trabajador: data.nombre,
+      cedula: data.cedula,
+      empresa: data.empresa,
+      area: data.area,
+      cargo: data.cargo,
+      fecha: data.fecha,
+      timestamp: data.timestamp,
+      presenta_dolor: data.presentaDolor,
+      imc: data.imc,
+      fuma: data.fuma,
+      actividad_fisica: data.actFisica,
+      body_map_summary: bodyMap,
+      total_respuestas: responses.length,
+    });
+    showToast('📧 Notificación enviada a ' + email);
+  } catch(e) {
+    console.warn('EmailJS error:', e);
+    // Fail silently — don't block form submission
+  }
+}
+
+// ── EMAIL CONFIG ──
+function showEmailConfig() {
+  document.getElementById('adminPanel').classList.remove('show');
+  const modal = document.getElementById('emailConfigModal');
+  modal.classList.add('show');
+  if (emailConfig) {
+    document.getElementById('cfgServiceId').value = emailConfig.serviceId || '';
+    document.getElementById('cfgTemplateId').value = emailConfig.templateId || '';
+    document.getElementById('cfgPublicKey').value = emailConfig.publicKey || '';
+    document.getElementById('cfgEmail').value = emailConfig.email || '';
+  }
+}
+
+function saveEmailConfig() {
+  const cfg = {
+    serviceId: document.getElementById('cfgServiceId').value.trim(),
+    templateId: document.getElementById('cfgTemplateId').value.trim(),
+    publicKey: document.getElementById('cfgPublicKey').value.trim(),
+    email: document.getElementById('cfgEmail').value.trim(),
+  };
+  if (!cfg.email) { showToast('⚠️ Ingresa un correo destinatario'); return; }
+  emailConfig = cfg;
+  localStorage.setItem('encuesta_email_config', JSON.stringify(cfg));
+  document.getElementById('emailConfigModal').classList.remove('show');
+  updateAdminStats();
+  showToast('✅ Configuración de correo guardada');
+}
+
+// ── RESET ──
+function newResponse() {
+  document.getElementById('successScreen').classList.remove('show');
+  document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], select, textarea')
+    .forEach(el => { if(el.id !== 'empresa') el.value = ''; });
+  document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+  document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.conditional').forEach(el => el.classList.remove('visible'));
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('done', 'active'));
+
+  // Reset severidad cells
+  allSegments.forEach((seg, i) => {
+    const sevCell = document.getElementById(`sevcell_${i}`);
+    if (sevCell) {
+      sevCell.classList.remove('disabled');
+      sevCell.innerHTML = ['leve','moderado','severo'].map(s => `
+        <input type="radio" class="table-radio sev-radio" name="sev_${i}" value="${s}" id="s_${i}_${s}">
+        <label class="table-radio-label" for="s_${i}_${s}" style="border-color:#f0d0c0"></label>
+      `).join('');
+    }
+  });
+
+  firmaSigned = false;
+  document.getElementById('firmaBox').style.cssText = '';
+  document.getElementById('firmaText').textContent = 'Haga clic aquí para aceptar y firmar';
+  document.getElementById('firmaText').style.cssText = '';
+
+  // Show declaratoria again for new respondent
+  document.getElementById('checkAcepto').checked = false;
+  document.getElementById('btnAceptarModal').classList.remove('enabled');
+  document.getElementById('modalDeclaratoria').style.display = 'flex';
+
+  goTo(1);
+}
+
+// ── DOWNLOAD CSV ──
+function downloadCSV() {
+  if (responses.length === 0) { showToast('⚠️ No hay respuestas registradas aún'); return; }
+  const keys = Object.keys(responses[0]);
+  const csv = [
+    keys.join(';'),
+    ...responses.map(r => keys.map(k => `"${(r[k] || '').toString().replace(/"/g,'""')}"`).join(';'))
+  ].join('\n');
+  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Encuesta_Sintomatologia_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 Archivo descargado correctamente');
+}
+
+// ── ADMIN ──
+function toggleAdmin() {
+  document.getElementById('adminPanel').classList.toggle('show');
+  updateAdminStats();
+}
+
+function updateAdminStats() {
+  document.getElementById('adminTotal').textContent = responses.length;
+  document.getElementById('adminLast').textContent = responses.length
+    ? responses[responses.length-1].timestamp : '—';
+  document.getElementById('adminEmailStatus').textContent = emailConfig?.email
+    ? '✅ ' + emailConfig.email : '⚠️ Sin configurar';
+}
+
+function clearData() {
+  if (!confirm('¿Seguro que deseas borrar todas las respuestas?')) return;
+  responses = [];
+  localStorage.removeItem('encuesta_responses');
+  updateCount(); updateAdminStats();
+  showToast('🗑 Datos borrados');
+}
+
+function updateCount() {
+  const n = responses.length;
+  document.getElementById('responsesCount').textContent = n + (n === 1 ? ' respuesta' : ' respuestas');
+  document.getElementById('adminTotal').textContent = n;
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── INIT ──
+buildTable();
+updateCount();
+updateAdminStats();
+document.getElementById('fecha').valueAsDate = new Date();
+document.getElementById('empresa').value = 'CENTRO GESTIÓN SOSTENIBLE SAS ESP';
+</script>
+</body>
+</html>
