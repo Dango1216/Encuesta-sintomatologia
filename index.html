@@ -27,9 +27,9 @@
     --radius: 16px;
     --radius-sm: 10px;
   }
-
+ 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--warm);
@@ -37,7 +37,7 @@
     min-height: 100vh;
     padding: 0;
   }
-
+ 
   /* ── HEADER ── */
   .app-header {
     background: var(--navy);
@@ -99,7 +99,7 @@
     font-size: 0.8rem;
     font-weight: 500;
   }
-
+ 
   /* ── PROGRESS ── */
   .progress-bar-wrap {
     height: 4px;
@@ -114,14 +114,14 @@
     transition: width 0.4s ease;
     border-radius: 0 4px 4px 0;
   }
-
+ 
   /* ── MAIN LAYOUT ── */
   .app-body {
     display: grid;
     grid-template-columns: 220px 1fr;
     min-height: calc(100vh - 76px);
   }
-
+ 
   /* ── SIDEBAR ── */
   .sidebar {
     background: var(--white);
@@ -168,18 +168,18 @@
   }
   .sidebar-item.active .sidebar-dot { background: var(--teal); }
   .sidebar-item.done .sidebar-dot { background: var(--teal-light); }
-
+ 
   /* ── CONTENT ── */
   .main-content {
     padding: 36px 40px;
     max-width: 860px;
   }
-
+ 
   /* ── SECTION ── */
   .section { display: none; animation: fadeIn 0.35s ease; }
   .section.active { display: block; }
   @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: none; } }
-
+ 
   .section-header {
     display: flex;
     align-items: center;
@@ -207,13 +207,13 @@
     color: var(--text-light);
     margin-top: 3px;
   }
-
+ 
   /* ── FORM GRID ── */
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
   .form-grid.full { grid-template-columns: 1fr; }
   .span-2 { grid-column: span 2; }
-
+ 
   /* ── FIELD ── */
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field label {
@@ -242,7 +242,7 @@
   }
   .field input.error, .field select.error { border-color: var(--accent); }
   .field textarea { min-height: 80px; resize: vertical; }
-
+ 
   /* ── RADIO GROUP ── */
   .radio-group {
     display: flex;
@@ -271,7 +271,7 @@
     color: white;
   }
   .radio-option input { display: none; }
-
+ 
   /* ── CONDITIONAL ── */
   .conditional {
     background: var(--teal-pale);
@@ -282,7 +282,7 @@
     margin-top: 4px;
   }
   .conditional.visible { display: block; animation: fadeIn 0.25s ease; }
-
+ 
   /* ── CARD ── */
   .card {
     background: var(--white);
@@ -309,7 +309,7 @@
     height: 1px;
     background: var(--border);
   }
-
+ 
   /* ── BODY TABLE ── */
   .body-table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
   .body-table {
@@ -363,7 +363,7 @@
     letter-spacing: 0.08em;
     text-align: left;
   }
-
+ 
   /* ── TABLE RADIO ── */
   .table-radio { display: none; }
   .table-radio-label {
@@ -390,7 +390,7 @@
     font-weight: 700;
   }
   .sev-radio:checked + .table-radio-label { background: var(--accent); border-color: var(--accent); }
-
+ 
   /* ── INFO BOX ── */
   .info-box {
     background: var(--teal-pale);
@@ -404,7 +404,7 @@
     line-height: 1.6;
   }
   .info-box strong { color: var(--teal); }
-
+ 
   /* ── LEGEND ── */
   .legend {
     display: flex;
@@ -428,7 +428,7 @@
   }
   .legend-dot.freq { background: var(--teal); color: white; }
   .legend-dot.sev { background: var(--accent); color: white; }
-
+ 
   /* ── NAV BUTTONS ── */
   .nav-buttons {
     display: flex;
@@ -457,7 +457,7 @@
   .btn-accent { background: var(--accent); color: white; }
   .btn-accent:hover { background: #d4551f; transform: translateY(-1px); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
-
+ 
   /* ── SUCCESS ── */
   .success-screen {
     display: none;
@@ -482,7 +482,7 @@
     margin-bottom: 12px;
   }
   .success-screen p { color: var(--text-mid); font-size: 1rem; margin-bottom: 32px; }
-
+ 
   /* ── ADMIN PANEL ── */
   .admin-btn {
     position: fixed;
@@ -501,7 +501,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .admin-btn:hover { background: var(--teal); transform: scale(1.1); }
-
+ 
   .admin-panel {
     display: none;
     position: fixed;
@@ -533,7 +533,7 @@
   }
   .admin-stat:last-of-type { border-bottom: none; margin-bottom: 14px; }
   .admin-stat span:last-child { font-weight: 700; color: var(--teal); }
-
+ 
   /* ── FIRMA ── */
   .firma-box {
     background: var(--white);
@@ -550,7 +550,7 @@
     margin-top: 8px;
   }
   .firma-box:hover { border-color: var(--teal); color: var(--teal); }
-
+ 
   .declaration-text {
     background: var(--warm);
     border: 1px solid var(--border);
@@ -561,7 +561,7 @@
     line-height: 1.7;
     margin-bottom: 20px;
   }
-
+ 
   /* ── TOAST ── */
   .toast {
     position: fixed;
@@ -577,7 +577,7 @@
     box-shadow: var(--shadow-lg);
   }
   .toast.show { transform: none; }
-
+ 
   /* ── MODAL PRIVACIDAD ── */
   .modal-overlay {
     position: fixed; inset: 0;
@@ -654,7 +654,7 @@
   }
   .btn-modal-accept.enabled { opacity: 1; pointer-events: auto; }
   .btn-modal-accept.enabled:hover { background: var(--teal-light); transform: translateY(-1px); }
-
+ 
   /* ── EMAIL CONFIG ── */
   .email-config-card {
     background: var(--accent-light);
@@ -668,7 +668,7 @@
   .email-config-text { flex: 1; }
   .email-config-text p { font-size: 0.82rem; color: var(--text-mid); margin-top: 3px; }
   .email-config-text strong { font-size: 0.88rem; color: var(--navy); }
-
+ 
   /* ── SEVERIDAD DISABLED ── */
   .sev-disabled .table-radio-label {
     background: var(--border) !important;
@@ -686,7 +686,7 @@
     border-radius: 6px;
     white-space: nowrap;
   }
-
+ 
   /* ── MODAL DECLARATORIA ── */
   .modal-overlay {
     position: fixed; inset: 0;
@@ -783,7 +783,7 @@
   }
   .btn-modal-accept.enabled { opacity: 1; pointer-events: all; }
   .btn-modal-accept.enabled:hover { background: var(--teal-light); transform: translateY(-1px); }
-
+ 
   /* ── EMAIL CONFIG MODAL ── */
   .email-config-modal {
     position: fixed; inset: 0;
@@ -810,7 +810,89 @@
   .config-field input:focus { border-color: var(--teal); }
   .config-note { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
   .config-note a { color: var(--teal); }
-
+ 
+  /* ── MODAL CONTRASEÑA ADMIN ── */
+  .pwd-modal {
+    position: fixed; inset: 0;
+    background: rgba(13,43,62,0.75);
+    z-index: 600;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+  }
+  .pwd-modal.show { display: flex; animation: fadeIn 0.2s ease; }
+  .pwd-box {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 32px;
+    max-width: 360px; width: 100%;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+  }
+  .pwd-box .lock-icon {
+    font-size: 42px; margin-bottom: 14px;
+    display: block;
+  }
+  .pwd-box h3 {
+    font-family: 'DM Serif Display', serif;
+    color: var(--navy); font-size: 1.25rem;
+    margin-bottom: 6px;
+  }
+  .pwd-box p { font-size: 0.82rem; color: var(--text-light); margin-bottom: 20px; }
+  .pwd-input-wrap { position: relative; margin-bottom: 14px; }
+  .pwd-input-wrap input {
+    width: 100%;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 44px 12px 16px;
+    font-size: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 0.2em;
+    text-align: center;
+  }
+  .pwd-input-wrap input:focus { border-color: var(--teal); }
+  .pwd-input-wrap input.wrong { border-color: var(--accent); animation: shake 0.3s ease; }
+  @keyframes shake {
+    0%,100% { transform: none; }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  .pwd-toggle {
+    position: absolute; right: 12px; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    font-size: 18px; color: var(--text-light);
+  }
+  .pwd-error {
+    font-size: 0.8rem; color: var(--accent);
+    margin-bottom: 12px; display: none;
+  }
+  .pwd-error.show { display: block; }
+  .pwd-box .btn-pwd-ok {
+    width: 100%; padding: 12px;
+    background: var(--teal); color: white;
+    border: none; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    margin-bottom: 10px;
+  }
+  .pwd-box .btn-pwd-ok:hover { background: var(--teal-light); }
+  .pwd-box .btn-pwd-cancel {
+    width: 100%; padding: 10px;
+    background: none; color: var(--text-light);
+    border: none; font-size: 0.85rem;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .pwd-box .btn-pwd-cancel:hover { color: var(--text); }
+  .pwd-attempts {
+    font-size: 0.75rem; color: var(--text-light);
+    margin-top: 8px;
+  }
+ 
   /* ── NO-APLICA en tabla ── */
   .na-label {
     display: inline-flex; align-items: center; justify-content: center;
@@ -821,7 +903,7 @@
   }
   .sev-cell { transition: opacity 0.2s; }
   .sev-cell.disabled { opacity: 0.35; pointer-events: none; }
-
+ 
   @media (max-width: 768px) {
     .app-body { grid-template-columns: 1fr; }
     .sidebar { display: none; }
@@ -834,7 +916,7 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- HEADER -->
 <header class="app-header">
   <div class="header-icon">🦴</div>
@@ -847,13 +929,13 @@
     <button class="btn-download" onclick="downloadCSV()">⬇ Descargar resultados</button>
   </div>
 </header>
-
+ 
 <div class="progress-bar-wrap">
   <div class="progress-bar" id="progressBar" style="width:20%"></div>
 </div>
-
+ 
 <div class="app-body">
-
+ 
   <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sidebar-title">Secciones</div>
@@ -876,10 +958,10 @@
       <div class="sidebar-dot"></div> Declaración y Firma
     </div>
   </nav>
-
+ 
   <!-- MAIN -->
   <main class="main-content">
-
+ 
     <!-- ══ SECCIÓN 1: DATOS GENERALES ══ -->
     <div class="section active" id="section1">
       <div class="section-header">
@@ -889,7 +971,7 @@
           <div class="section-subtitle">Información de la empresa y contexto de la encuesta</div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Empresa</div>
         <div class="form-grid">
@@ -919,12 +1001,12 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="nav-buttons">
         <button class="btn btn-primary" onclick="nextSection(1)">Siguiente ›</button>
       </div>
     </div>
-
+ 
     <!-- ══ SECCIÓN 2: INFORMACIÓN PERSONAL ══ -->
     <div class="section" id="section2">
       <div class="section-header">
@@ -934,7 +1016,7 @@
           <div class="section-subtitle">Datos del trabajador</div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Identificación</div>
         <div class="form-grid">
@@ -959,7 +1041,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Datos Demográficos</div>
         <div class="form-grid three">
@@ -997,7 +1079,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Antigüedad</div>
         <div class="form-grid">
@@ -1025,13 +1107,13 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(1)">‹ Anterior</button>
         <button class="btn btn-primary" onclick="nextSection(2)">Siguiente ›</button>
       </div>
     </div>
-
+ 
     <!-- ══ SECCIÓN 3: HÁBITOS ══ -->
     <div class="section" id="section3">
       <div class="section-header">
@@ -1041,7 +1123,7 @@
           <div class="section-subtitle">Hábitos que pueden influir en la salud osteomuscular</div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Tabaquismo</div>
         <div class="field">
@@ -1070,7 +1152,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Actividad Física</div>
         <div class="field">
@@ -1106,13 +1188,13 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(2)">‹ Anterior</button>
         <button class="btn btn-primary" onclick="nextSection(3)">Siguiente ›</button>
       </div>
     </div>
-
+ 
     <!-- ══ SECCIÓN 4: ESTADO OSTEOMUSCULAR ══ -->
     <div class="section" id="section4">
       <div class="section-header">
@@ -1122,7 +1204,7 @@
           <div class="section-subtitle">Información sobre condición osteomuscular actual</div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="field" style="margin-bottom:16px">
           <label>¿Presenta dolor, molestias o disconfort a nivel osteomuscular en alguna parte del cuerpo?</label>
@@ -1131,7 +1213,7 @@
             <label class="radio-option"><input type="radio" name="dolor" value="No"> ✅ No</label>
           </div>
         </div>
-
+ 
         <div class="field" style="margin-bottom:16px">
           <label>¿Presenta alguna enfermedad osteomuscular actualmente?</label>
           <div class="radio-group" id="enfermedadOsteo" style="margin-top:10px">
@@ -1139,7 +1221,7 @@
             <label class="radio-option"><input type="radio" name="enfOsteo" value="No" onchange="toggleConditional('enfOsteoDetalle', false)"> ✅ No</label>
           </div>
         </div>
-
+ 
         <div class="conditional" id="enfOsteoDetalle">
           <div class="form-grid three">
             <div class="field">
@@ -1157,13 +1239,13 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(3)">‹ Anterior</button>
         <button class="btn btn-primary" onclick="nextSection(4)">Siguiente ›</button>
       </div>
     </div>
-
+ 
     <!-- ══ SECCIÓN 5: MAPA CORPORAL ══ -->
     <div class="section" id="section5">
       <div class="section-header">
@@ -1173,18 +1255,18 @@
           <div class="section-subtitle">Marque la frecuencia y severidad de molestias en cada zona</div>
         </div>
       </div>
-
+ 
       <div class="info-box">
         Marque con ✓ en la casilla correspondiente para cada segmento corporal.<br>
         <strong>Frecuencia:</strong> Nunca / Rara vez (1 vez al mes) / Frecuente (c/2 semanas) / Continuo (≥3 veces/semana)<br>
         <strong>Severidad</strong> (solo si marcó Rara vez, Frecuente o Continuo): Leve / Moderado / Severo
       </div>
-
+ 
       <div class="legend">
         <div class="legend-item"><div class="legend-dot freq">✓</div> Frecuencia</div>
         <div class="legend-item"><div class="legend-dot sev">✓</div> Severidad</div>
       </div>
-
+ 
       <div class="body-table-wrap">
         <table class="body-table" id="bodyTable">
           <thead>
@@ -1209,13 +1291,13 @@
           <tbody id="bodyTableBody"></tbody>
         </table>
       </div>
-
+ 
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(4)">‹ Anterior</button>
         <button class="btn btn-primary" onclick="nextSection(5)">Siguiente ›</button>
       </div>
     </div>
-
+ 
     <!-- ══ SECCIÓN 6: DECLARACIÓN Y FIRMA ══ -->
     <div class="section" id="section6">
       <div class="section-header">
@@ -1225,11 +1307,11 @@
           <div class="section-subtitle">Confirmación de la información suministrada</div>
         </div>
       </div>
-
+ 
       <div class="declaration-text">
         Declaro que he sido informado y he comprendido satisfactoriamente la naturaleza y propósito de esta encuesta, que me han explicado claramente que la información es de carácter confidencial y será utilizada exclusivamente para fines de vigilancia epidemiológica en el marco del Sistema de Gestión de Seguridad y Salud en el Trabajo (SG-SST).
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Firma del Trabajador</div>
         <div class="field">
@@ -1243,13 +1325,13 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="nav-buttons">
         <button class="btn btn-secondary" onclick="goTo(5)">‹ Anterior</button>
         <button class="btn btn-accent" onclick="submitForm()">✅ Enviar Encuesta</button>
       </div>
     </div>
-
+ 
     <!-- SUCCESS SCREEN -->
     <div class="success-screen" id="successScreen">
       <div class="success-icon">✅</div>
@@ -1257,10 +1339,10 @@
       <p>Gracias por completar la encuesta de sintomatología osteomuscular.<br>Su información ha sido registrada correctamente.</p>
       <button class="btn btn-primary" onclick="newResponse()" style="margin:0 auto">+ Nueva respuesta</button>
     </div>
-
+ 
   </main>
 </div>
-
+ 
 <!-- MODAL DECLARATORIA LEY 1581 -->
 <div class="modal-overlay" id="modalDeclaratoria">
   <div class="modal-box">
@@ -1320,7 +1402,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- EMAIL CONFIG MODAL -->
 <div class="email-config-modal" id="emailConfigModal">
   <div class="email-config-box">
@@ -1351,9 +1433,28 @@
     </div>
   </div>
 </div>
-
+ 
+<!-- MODAL CONTRASEÑA ADMIN -->
+<div class="pwd-modal" id="pwdModal">
+  <div class="pwd-box">
+    <span class="lock-icon">🔐</span>
+    <h3>Acceso Administrador</h3>
+    <p>Esta sección es exclusiva para el administrador del sistema. Ingresa la contraseña para continuar.</p>
+    <div class="pwd-input-wrap">
+      <input type="password" id="pwdInput" placeholder="••••••••"
+        onkeydown="if(event.key==='Enter') verifyPwd()"
+        oninput="document.getElementById('pwdError').classList.remove('show');this.classList.remove('wrong')">
+      <button class="pwd-toggle" onclick="togglePwdVis()" title="Mostrar/ocultar">👁</button>
+    </div>
+    <div class="pwd-error" id="pwdError">Contraseña incorrecta. Intenta nuevamente.</div>
+    <button class="btn-pwd-ok" onclick="verifyPwd()">🔓 Ingresar</button>
+    <button class="btn-pwd-cancel" onclick="closePwdModal()">Cancelar</button>
+    <div class="pwd-attempts" id="pwdAttempts"></div>
+  </div>
+</div>
+ 
 <!-- ADMIN BTN -->
-<button class="admin-btn" onclick="toggleAdmin()" title="Panel de administrador">⚙</button>
+<button class="admin-btn" onclick="requestAdminAccess()" title="Panel de administrador">⚙</button>
 <div class="admin-panel" id="adminPanel">
   <h3>Panel de Resultados</h3>
   <p>Gestión de respuestas almacenadas localmente</p>
@@ -1373,9 +1474,9 @@
   <button class="btn btn-secondary" onclick="showEmailConfig()" style="width:100%; justify-content:center; margin-bottom:8px; font-size:0.82rem">📧 Configurar correo de notificación</button>
   <button class="btn btn-secondary" onclick="clearData()" style="width:100%; justify-content:center; font-size:0.8rem">🗑 Borrar todos los datos</button>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
 // ── SEGMENTOS CORPORALES ──
@@ -1399,25 +1500,25 @@ const segments = [
     'Pie y/o Tobillo Izquierdo','Pie y/o Tobillo Derecho',
   ]}
 ];
-
+ 
 let allSegments = [];
 let firmaSigned = false;
 let currentSection = 1;
 let responses = JSON.parse(localStorage.getItem('encuesta_responses') || '[]');
 let emailConfig = JSON.parse(localStorage.getItem('encuesta_email_config') || 'null');
-
+ 
 // ── MODAL DECLARATORIA ──
 function toggleModalBtn() {
   const checked = document.getElementById('checkAcepto').checked;
   const btn = document.getElementById('btnAceptarModal');
   btn.classList.toggle('enabled', checked);
 }
-
+ 
 function aceptarDeclaratoria() {
   if (!document.getElementById('checkAcepto').checked) return;
   document.getElementById('modalDeclaratoria').style.display = 'none';
 }
-
+ 
 // ── BUILD TABLE ──
 function buildTable() {
   const tbody = document.getElementById('bodyTableBody');
@@ -1427,7 +1528,7 @@ function buildTable() {
     divRow.className = 'divider';
     divRow.innerHTML = `<td colspan="9">${group.group}</td>`;
     tbody.appendChild(divRow);
-
+ 
     group.items.forEach(seg => {
       allSegments.push(seg);
       const tr = document.createElement('tr');
@@ -1452,7 +1553,7 @@ function buildTable() {
     });
   });
 }
-
+ 
 // ── FRECUENCIA → SEVERIDAD automático ──
 function onFreqChange(idx, val) {
   const sevCell = document.getElementById(`sevcell_${idx}`);
@@ -1472,7 +1573,7 @@ function onFreqChange(idx, val) {
     }
   }
 }
-
+ 
 // ── NAVIGATION ──
 function goTo(n) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1483,7 +1584,7 @@ function goTo(n) {
   document.getElementById('progressBar').style.width = (n / 6 * 100) + '%';
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
-
+ 
 function nextSection(current) {
   if (current === 1 && !validate(['ciudad','fecha','empresa','area','cargo'])) return;
   if (current === 2 && !validate(['nombre','cedula','edad'])) return;
@@ -1492,7 +1593,7 @@ function nextSection(current) {
   }
   goTo(current + 1);
 }
-
+ 
 function validate(fields) {
   let ok = true;
   fields.forEach(id => {
@@ -1507,12 +1608,12 @@ function validate(fields) {
   if (!ok) showToast('⚠️ Por favor completa los campos requeridos');
   return ok;
 }
-
+ 
 // ── CONDITIONALS ──
 function toggleConditional(id, show) {
   document.getElementById(id).classList.toggle('visible', show);
 }
-
+ 
 // ── RADIO OPTIONS ──
 document.addEventListener('click', e => {
   const opt = e.target.closest('.radio-option');
@@ -1522,7 +1623,7 @@ document.addEventListener('click', e => {
   group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
   opt.classList.add('selected');
 });
-
+ 
 // ── FIRMA ──
 function toggleFirma() {
   firmaSigned = !firmaSigned;
@@ -1541,7 +1642,7 @@ function toggleFirma() {
     txt.style.cssText = '';
   }
 }
-
+ 
 // ── COLLECT DATA ──
 function collectData() {
   const getRadio = (name) => {
@@ -1552,10 +1653,10 @@ function collectData() {
     const el = document.getElementById(id);
     return el ? el.value : '';
   };
-
+ 
   const talla = parseFloat(getVal('talla'));
   const peso = parseFloat(getVal('peso'));
-
+ 
   const data = {
     timestamp: new Date().toLocaleString('es-CO'),
     ciudad: getVal('ciudad'),
@@ -1588,7 +1689,7 @@ function collectData() {
     cie10: getVal('cie10'),
     descCie10: getVal('descCie10'),
   };
-
+ 
   // Body segments — severidad "No aplica" si frecuencia fue Nunca
   allSegments.forEach((seg, i) => {
     const freq = getRadio(`freq_${i}`);
@@ -1597,12 +1698,12 @@ function collectData() {
     data[`freq_${seg}`] = freq || '';
     data[`sev_${seg}`] = isNunca ? 'No aplica' : (getRadio(`sev_${i}`) || '');
   });
-
+ 
   data.firmado = firmaSigned ? 'Sí' : 'No';
   data.nombreFirma = getVal('nombreFirma');
   return data;
 }
-
+ 
 // ── SUBMIT ──
 async function submitForm() {
   if (!firmaSigned) {
@@ -1613,31 +1714,31 @@ async function submitForm() {
   responses.push(data);
   localStorage.setItem('encuesta_responses', JSON.stringify(responses));
   updateCount();
-
+ 
   // Send email notification
   await sendEmailNotification(data);
-
+ 
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('successScreen').classList.add('show');
   showToast('✅ Encuesta registrada exitosamente');
 }
-
+ 
 // ── EMAIL NOTIFICATION ──
 async function sendEmailNotification(data) {
   if (!emailConfig) return;
   const { serviceId, templateId, publicKey, email } = emailConfig;
   if (!serviceId || !templateId || !publicKey || !email) return;
-
+ 
   try {
     emailjs.init(publicKey);
-
+ 
     // Build body map summary
     const bodyMap = allSegments.map((seg, i) => {
       const freq = data[`freq_${seg}`] || '—';
       const sev = data[`sev_${seg}`] || '—';
       return `${seg}: Frecuencia=${freq} | Severidad=${sev}`;
     }).join('\n');
-
+ 
     await emailjs.send(serviceId, templateId, {
       to_email: email,
       nombre_trabajador: data.nombre,
@@ -1660,7 +1761,7 @@ async function sendEmailNotification(data) {
     // Fail silently — don't block form submission
   }
 }
-
+ 
 // ── EMAIL CONFIG ──
 function showEmailConfig() {
   document.getElementById('adminPanel').classList.remove('show');
@@ -1673,7 +1774,7 @@ function showEmailConfig() {
     document.getElementById('cfgEmail').value = emailConfig.email || '';
   }
 }
-
+ 
 function saveEmailConfig() {
   const cfg = {
     serviceId: document.getElementById('cfgServiceId').value.trim(),
@@ -1688,7 +1789,7 @@ function saveEmailConfig() {
   updateAdminStats();
   showToast('✅ Configuración de correo guardada');
 }
-
+ 
 // ── RESET ──
 function newResponse() {
   document.getElementById('successScreen').classList.remove('show');
@@ -1698,7 +1799,7 @@ function newResponse() {
   document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('selected'));
   document.querySelectorAll('.conditional').forEach(el => el.classList.remove('visible'));
   document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('done', 'active'));
-
+ 
   // Reset severidad cells
   allSegments.forEach((seg, i) => {
     const sevCell = document.getElementById(`sevcell_${i}`);
@@ -1710,20 +1811,20 @@ function newResponse() {
       `).join('');
     }
   });
-
+ 
   firmaSigned = false;
   document.getElementById('firmaBox').style.cssText = '';
   document.getElementById('firmaText').textContent = 'Haga clic aquí para aceptar y firmar';
   document.getElementById('firmaText').style.cssText = '';
-
+ 
   // Show declaratoria again for new respondent
   document.getElementById('checkAcepto').checked = false;
   document.getElementById('btnAceptarModal').classList.remove('enabled');
   document.getElementById('modalDeclaratoria').style.display = 'flex';
-
+ 
   goTo(1);
 }
-
+ 
 // ── DOWNLOAD CSV ──
 function downloadCSV() {
   if (responses.length === 0) { showToast('⚠️ No hay respuestas registradas aún'); return; }
@@ -1741,13 +1842,83 @@ function downloadCSV() {
   URL.revokeObjectURL(url);
   showToast('📥 Archivo descargado correctamente');
 }
-
+ 
+// ── CONTRASEÑA ADMIN ──
+// Para cambiar la contraseña, modifica este valor:
+const ADMIN_PASSWORD = 'CGS2026*';
+let pwdAttempts = 0;
+let adminUnlocked = false;
+let lockUntil = 0;
+ 
+function requestAdminAccess() {
+  // Si ya está autenticado en esta sesión, abrir directo
+  if (adminUnlocked) { toggleAdmin(); return; }
+ 
+  // Verificar bloqueo temporal
+  if (Date.now() < lockUntil) {
+    const secs = Math.ceil((lockUntil - Date.now()) / 1000);
+    showToast(`⛔ Demasiados intentos. Espera ${secs} segundos.`);
+    return;
+  }
+ 
+  // Mostrar modal de contraseña
+  document.getElementById('pwdInput').value = '';
+  document.getElementById('pwdError').classList.remove('show');
+  document.getElementById('pwdAttempts').textContent = '';
+  document.getElementById('pwdModal').classList.add('show');
+  setTimeout(() => document.getElementById('pwdInput').focus(), 100);
+}
+ 
+function verifyPwd() {
+  const input = document.getElementById('pwdInput').value;
+  if (input === ADMIN_PASSWORD) {
+    // Correcto
+    pwdAttempts = 0;
+    adminUnlocked = true;
+    document.getElementById('pwdModal').classList.remove('show');
+    showToast('✅ Acceso concedido');
+    toggleAdmin();
+  } else {
+    // Incorrecto
+    pwdAttempts++;
+    document.getElementById('pwdInput').classList.add('wrong');
+    document.getElementById('pwdError').classList.add('show');
+ 
+    if (pwdAttempts >= 5) {
+      lockUntil = Date.now() + 60000; // bloquear 60 seg
+      document.getElementById('pwdModal').classList.remove('show');
+      showToast('⛔ 5 intentos fallidos. Bloqueado por 60 segundos.');
+      pwdAttempts = 0;
+    } else {
+      const restantes = 5 - pwdAttempts;
+      document.getElementById('pwdAttempts').textContent =
+        `Intentos restantes: ${restantes}`;
+    }
+  }
+}
+ 
+function closePwdModal() {
+  document.getElementById('pwdModal').classList.remove('show');
+  document.getElementById('pwdInput').value = '';
+}
+ 
+function togglePwdVis() {
+  const inp = document.getElementById('pwdInput');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+ 
+// Cerrar sesión admin al cambiar de sección (seguridad adicional)
+function lockAdmin() {
+  adminUnlocked = false;
+  document.getElementById('adminPanel').classList.remove('show');
+}
+ 
 // ── ADMIN ──
 function toggleAdmin() {
   document.getElementById('adminPanel').classList.toggle('show');
   updateAdminStats();
 }
-
+ 
 function updateAdminStats() {
   document.getElementById('adminTotal').textContent = responses.length;
   document.getElementById('adminLast').textContent = responses.length
@@ -1755,7 +1926,7 @@ function updateAdminStats() {
   document.getElementById('adminEmailStatus').textContent = emailConfig?.email
     ? '✅ ' + emailConfig.email : '⚠️ Sin configurar';
 }
-
+ 
 function clearData() {
   if (!confirm('¿Seguro que deseas borrar todas las respuestas?')) return;
   responses = [];
@@ -1763,13 +1934,13 @@ function clearData() {
   updateCount(); updateAdminStats();
   showToast('🗑 Datos borrados');
 }
-
+ 
 function updateCount() {
   const n = responses.length;
   document.getElementById('responsesCount').textContent = n + (n === 1 ? ' respuesta' : ' respuestas');
   document.getElementById('adminTotal').textContent = n;
 }
-
+ 
 // ── TOAST ──
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -1777,7 +1948,7 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3500);
 }
-
+ 
 // ── INIT ──
 buildTable();
 updateCount();
@@ -1787,3 +1958,4 @@ document.getElementById('empresa').value = 'CENTRO GESTIÓN SOSTENIBLE SAS ESP';
 </script>
 </body>
 </html>
+ 
